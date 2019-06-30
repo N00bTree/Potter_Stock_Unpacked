@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.appdirectedsmsproxy">
+        <permission name="android.permission.CARRIER_FILTER_SMS"/>
+    </privapp-permissions>
+</permissions>

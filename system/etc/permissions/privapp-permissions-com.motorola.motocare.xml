@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.motocare">
+
+        <!-- System defined permissions -->
+        <permission name="android.permission.CRYPT_KEEPER"/>
+        <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.READ_LOGS"/>
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+
+        <!-- Motorola defined permissions -->
+        <permission name="com.motorola.permission.EXTRA_SCREEN_STATUS"/>
+
+    </privapp-permissions>
+</permissions>

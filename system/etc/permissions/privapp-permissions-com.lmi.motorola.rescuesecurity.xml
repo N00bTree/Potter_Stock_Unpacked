@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <!-- Read and write permission need by group 'mot_tcmd'  -->
+    <privapp-permissions package="com.lmi.motorola.rescuesecurity">
+        <permission name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT"/>
+        <permission name="android.permission.CAPTURE_VIDEO_OUTPUT"/>
+        <permission name="android.permission.DELETE_PACKAGES"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+        <permission name="android.permission.READ_FRAME_BUFFER"/>
+        <permission name="android.permission.READ_LOGS"/>
+        <permission name="android.permission.REAL_GET_TASKS"/>
+        <permission name="android.permission.SET_WALLPAPER_COMPONENT"/>
+        <permission name="android.permission.UPDATE_DEVICE_STATS"/>
+        <permission name="android.permission.WRITE_APN_SETTINGS"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+</permissions>

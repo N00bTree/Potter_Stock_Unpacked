@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *   Copyright (C) 2011 Motorola, Inc.
+ *    All Rights Reserved
+
+ *   The contents of this file are Motorola Confidential Restricted (MCR).
+ *
+ *   Motorola has extended the Package Manager so that Motorola can have the system
+ *   grant default permissions to apps that Google has granted us a GTS waiver for.
+ *   This file defines the default permissions for PreloadContacts app to be granted by system.
+ *
+ *   AUTHOR                        DATE                     VERSION
+ *   Bin Zhou(xqc387)              9-11-2015                1
+ */
+ */
+-->
+<permissions>
+    <package name="com.motorola.contacts.preloadcontacts">
+        <permission name="android.permission.READ_CONTACTS"/>
+        <permission name="android.permission.WRITE_CONTACTS"/>
+    </package>
+</permissions>

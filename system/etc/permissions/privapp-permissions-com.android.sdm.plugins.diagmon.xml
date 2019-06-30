@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.android.sdm.plugins.diagmon">
+        <permission name="android.permission.LOCAL_MAC_ADDRESS"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+        <permission name="android.permission.TETHER_PRIVILEGED"/>
+        <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+</permissions>

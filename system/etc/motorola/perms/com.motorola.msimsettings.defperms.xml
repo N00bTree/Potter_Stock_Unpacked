@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *   Copyright (C) 2015 Motorola, Inc.
+ *   All Rights Reserved
+ *
+ *   The contents of this file are Motorola Confidential Restricted (MCR).
+ *
+ *   Motorola has extended the Package Manager so that Motorola can have the system
+ *   grant default permissions to apps that Google has granted us a GTS waiver for.
+ *   This file defines the default permissions for UserPreferredSimProvider app to be granted by system.
+ *
+ *   AUTHOR                        DATE                     VERSION
+ *   Abhinay P(a23056)              9-21-2015                1
+ *   Carlos Fernandes (carlosf)     01-30-2018               2
+ */
+ */
+-->
+<permissions>
+    <package name="com.motorola.msimsettings">
+        <permission name="android.permission.READ_CONTACTS"/>
+        <permission name="android.permission.WRITE_CONTACTS"/>
+        <permission name="android.permission.READ_CALL_LOG"/>
+    </package>
+</permissions>

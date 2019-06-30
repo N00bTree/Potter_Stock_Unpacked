@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017 Motorola Mobility Inc.
+    All Rights Reserved.
+    Motorola Mobility Confidential Restricted.
+-->
+<applications>
+    <package name="com.teamviewer.quicksupport.market">
+        <cert>A7:D9:9F:F4:85:F0:C5:5F:D4:F1:F9:CC:35:CB:08:A1:B7:4E:B9:95:FC:3F:05:24:31:8F:F6:62:F8:D3:CD:26</cert>
+        <permission name="android.permission.INJECT_EVENTS" warn="true"/>
+        <permission name="android.permission.CAPTURE_VIDEO_OUTPUT" warn="true"/>
+    </package>
+    <package name="com.teamviewer.host.market">
+        <cert>A7:D9:9F:F4:85:F0:C5:5F:D4:F1:F9:CC:35:CB:08:A1:B7:4E:B9:95:FC:3F:05:24:31:8F:F6:62:F8:D3:CD:26</cert>
+        <permission name="android.permission.INJECT_EVENTS" warn="true"/>
+        <permission name="android.permission.CAPTURE_VIDEO_OUTPUT" warn="true"/>
+    </package>
+    <package name="net.soti.mobicontrol.androidwork" enablemode="1">
+        <cert>86:7F:26:48:D2:4C:3D:CA:2F:59:B9:E7:5A:B6:FE:B8:CA:56:66:33:65:36:9F:A3:C9:5F:F6:03:E5:A1:BA:67</cert>
+        <permission name="android.permission.INJECT_EVENTS" warn="true"/>
+        <permission name="android.permission.READ_FRAME_BUFFER" warn="true"/>
+        <permission name="android.permission.ACCESS_SURFACE_FLINGER" warn="true"/>
+    </package>
+</applications>

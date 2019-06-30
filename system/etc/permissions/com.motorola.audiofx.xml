@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <feature name="com.motorola.software.audiofx" />
+    <privapp-permissions package="com.motorola.audiofx">
+        <permission name="android.permission.MODIFY_AUDIO_SETTINGS" />
+        <permission name="android.permission.BLUETOOTH" />
+        <permission name="android.permission.BLUETOOTH_PRIVILEGED" />
+        <permission name="com.motorola.permission.ACCESS_CHECKIN" />
+        <permission name="android.permission.WAKE_LOCK" />
+    </privapp-permissions>
+</permissions>

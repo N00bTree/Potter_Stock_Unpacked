@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) 2017 Motorola Mobility Inc.
+     All Rights Reserved.
+     Motorola Mobility Confidential Restricted.
+-->
+<permissions>
+     <privapp-permissions package="com.motorola.storageoptimizer">
+        <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+        <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
+    </privapp-permissions>
+</permissions>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.frameworks.singlehand">
+
+        <!-- signature|privileged -->
+        <permission name="android.permission.REAL_GET_TASKS"/>
+        <permission name="android.permission.INTERACT_ACROSS_USERS" />
+        <permission name="android.permission.MANAGE_USERS" />
+        <permission name="android.permission.READ_WALLPAPER_INTERNAL" />
+
+        <!-- signatureOrSystem -->
+        <permission name="com.motorola.permission.SINGLE_HAND_SET_GLOBAL_TRANSFORM" />
+
+    </privapp-permissions>
+</permissions>

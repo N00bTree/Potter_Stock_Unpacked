@@ -1,0 +1,272 @@
+#!/system/bin/sh
+
+# bug2go-bugreport-oem from bug2go own repo.
+
+doLog(){
+    log -p $1 -t bug2go-bugreport-oem $2
+}
+
+collectAplogd(){
+    doLog d "Collecting aplogd logs"
+    # Grab the system logs.
+    aplogcat --dump --output ${outputPath}/aplogcat- --temp ${outputPath} --bytes 100M --boots 3
+    # Grab the logs left by aplogd itself (for debugging missing log issues).
+    cat /data/vendor/aplogd/aplogd-log.bak.txt > ${outputPath}/aplogd-log.txt
+    cat /data/vendor/aplogd/aplogd-log.txt >> ${outputPath}/aplogd-log.txt
+    chmod 640 ${outputPath}/aplogd-log.txt
+}
+
+collectFPS(){
+    doLog d "Collecting FPS logs"
+
+    # Grab the logs left by fingerprint sensor.
+    cat /sys/kernel/debug/tzdbg/qsee_log > ${outputPath}/qsee_log.txt &
+    sleep 10
+    kill $!
+    wait $!
+}
+
+collectBatteryTracer(){
+    doLog d "Collecting Battery Tracer logs"
+    local battTracerLocs="\
+        /sdcard/batterytracer/databases/current\
+        /sdcard/batterytracer/databases/backup0"
+
+    for loc in $battTracerLocs; do
+        for file in $(ls $loc/BT*.btd); do
+            outFile=BT${file#*BT};
+            cp $file ${outputPath}/${outFile}
+            chmod 640 ${outputPath}/${outFile}
+        done
+    done
+}
+
+collectDontpanic(){
+    doLog d "Collecting dontpanic logs"
+    for file in $(ls /data/dontpanic/)
+    do
+        cp /data/dontpanic/$file ${outputPath}/${file}
+        chmod 640 ${outputPath}/${file}
+    done
+}
+
+collectPowerSupplyLogger(){
+    doLog d "Collecting Power Supply Logger logs"
+    for file in power_supply_info.csv
+    do
+        cp /data/power_supply_logger/$file ${outputPath}/${file}
+        chmod 640 ${outputPath}/${file}
+    done
+}
+
+collectSoCDebugLog(){
+    doLog d "Collecting SOC debug logs"
+    case $(getprop ro.board.platform) in
+        "msm8996" | "msm8953")
+                if [ -e /sys/kernel/debug/ipc_logging/charger/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/charger/log > ${outputPath}/charger_log.txt
+                        chmod 640 ${outputPath}/charger_log.txt
+                fi
+                if [ -e /sys/kernel/debug/ipc_logging/charger_reg/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/charger_reg/log > ${outputPath}/charger_reg_log.txt
+                        chmod 640 ${outputPath}/charger_reg_log.txt
+                fi
+                if [ -e /sys/kernel/debug/ipc_logging/fusb302/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/fusb302/log > ${outputPath}/typeC.txt
+                        cat /sys/kernel/debug/fusb302/register_dump >> ${outputPath}/typeC.txt
+                        chmod 640 ${outputPath}/typeC.txt
+                fi
+        ;;
+        "msm8998" | "sdm660")
+                if [ -e /sys/kernel/debug/ipc_logging/charger/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/charger/log > ${outputPath}/charger_log.txt
+                        chmod 640 ${outputPath}/charger_log.txt
+                fi
+                if [ -e /sys/kernel/debug/ipc_logging/charger_reg/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/charger_reg/log > ${outputPath}/charger_reg_log.txt
+                        cat /sys/kernel/debug/charger/register_dump
+                        cat /sys/kernel/debug/ipc_logging/charger_reg/log >> ${outputPath}/charger_reg_log.txt
+                        chmod 640 ${outputPath}/charger_reg_log.txt
+                fi
+                if [ -e /sys/kernel/debug/fg/sram/sram_dump ]; then
+                        cat /sys/kernel/debug/fg/sram/sram_dump > ${outputPath}/fg_sram_log.txt
+                        chmod 640 ${outputPath}/fg_sram_log.txt
+                fi
+                if [ -e /sys/kernel/debug/pmic-votable ]; then
+                        cat /sys/kernel/debug/pmic-votable/*/status > ${outputPath}/pmic_voter_log.txt
+                        chmod 640 ${outputPath}/pmic_voter_log.txt
+                fi
+                if [ -e /sys/kernel/debug/ipc_logging/usb_pd/log ]; then
+                        cat /sys/kernel/debug/ipc_logging/usb_pd/log > ${outputPath}/typeC.txt
+                        cat /sys/kernel/debug/usb_pd/register_dump >> ${outputPath}/typeC.txt
+                        chmod 640 ${outputPath}/typeC.txt
+                fi
+        ;;
+    esac
+
+    case $(getprop ro.board.platform) in
+        "msm8996")
+            if [ -e /sys/kernel/debug/6a00000.dwc3/events ]; then
+                cat /sys/kernel/debug/6a00000.dwc3/events > ${outputPath}/dwc3_usb.txt
+                cat /sys/kernel/debug/6a00000.dwc3/int_events >> ${outputPath}/dwc3_usb.txt
+                chmod 640 ${outputPath}/dwc3_usb.txt
+            fi
+        ;;
+        "msm8953")
+            if [ -e /sys/kernel/debug/7000000.dwc3/events ]; then
+               cat /sys/kernel/debug/7000000.dwc3/events > ${outputPath}/dwc3_usb.txt
+               cat /sys/kernel/debug/7000000.dwc3/int_events >> ${outputPath}/dwc3_usb.txt
+               chmod 640 ${outputPath}/dwc3_usb.txt
+           fi
+        ;;
+        "msm8998" | "sdm660")
+            if [ -e /sys/kernel/debug/a800000.dwc3/events ]; then
+               cat /sys/kernel/debug/a800000.dwc3/events > ${outputPath}/dwc3_usb.txt
+               cat /sys/kernel/debug/a800000.dwc3/int_events >> ${outputPath}/dwc3_usb.txt
+               chmod 640 ${outputPath}/dwc3_usb.txt
+           fi
+        ;;
+    esac
+}
+
+collectBp(){
+    # Grab the last 200 MB of logs
+    doLog d "Collecting BP logs"
+    out=/data/vendor/bug2go/modem
+    log=$out/getlogs.log
+    if [[ $(getprop init.svc.mdlog-getlogs) != "running" ]]; then
+        setprop ctl.start mdlog-getlogs
+        time=0
+        while [[ $(getprop init.svc.mdlog-getlogs) == "running" ]]; do
+           sleep 1
+           ((time+=1))
+        done
+        echo "mdlog-getlogs took ${time}s to complete" >>$log
+        mv $out ${outputPath}/
+    else
+        echo "another mdlog-getlogs is running..." >>$log
+    fi
+}
+
+collectEnergyMonitor(){
+    doLog d "Collecting EnergyMonitor logs"
+
+    energyMonitorHome="/storage/sdcard0/energy_monitor"
+    energyMonitorReport="${outputPath}/sdcard_energy_monitor_enmon_report.tar"
+
+    if [ ! -d "${energyMonitorHome}" ]
+    then
+        return
+    fi
+
+    # Energy monitor data files have suffix .bin
+    emFileList=""
+    for f in $(ls ${energyMonitorHome}/*.bin 2>/dev/null)
+    do
+        emFileList="${emFileList} ${f##*/}"
+    done
+    if [ ! -z "${emFileList}" ]
+    then
+        /system/bin/busybox tar cf $energyMonitorReport -C $energyMonitorHome ${emFileList}
+    fi
+}
+
+collectWlanDriverLog(){
+    doLog d "Collecting wlan driver logs"
+    wlanlogpath="/data/misc/wifi/logs/"
+    mkdir  ${outputPath}/wlandriver
+    chmod 770 ${outputPath}/wlandriver
+    cp $wlanlogpath/* ${outputPath}/wlandriver/
+    /system/bin/iwpriv wlan0 version >${outputPath}/wlan_version.txt
+}
+
+collectModsLog(){
+    doLog d "Collecting Mods logs"
+    echo "APBA Unipro MID" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/unipro_mid &>> ${outputPath}/mods_log.txt
+    echo "APBA Unipro PID" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/unipro_pid &>> ${outputPath}/mods_log.txt
+    echo "APBA VID" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/vid &>> ${outputPath}/mods_log.txt
+    echo "APBA PID" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/pid &>> ${outputPath}/mods_log.txt
+    echo "APBA IDs as reported by TSB" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/apba_ids &>> ${outputPath}/mods_log.txt
+    echo "APBA FW Version" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/fw_version_str &>> ${outputPath}/mods_log.txt
+    echo "APBA Log" &>> ${outputPath}/mods_log.txt
+    for i in `seq 1 5`; do
+        cat /sys/devices/soc/0.apba_ctrl/apba_log &>> ${outputPath}/mods_log.txt
+    done
+    echo "" &>> ${outputPath}/mods_log.txt
+    echo "APBE Log" &>> ${outputPath}/mods_log.txt
+    for i in `seq 1 5`; do
+        cat /sys/devices/soc/0.apba_ctrl/apbe_log &>> ${outputPath}/mods_log.txt
+    done
+    echo "" &>> ${outputPath}/mods_log.txt
+    echo "Unipro Stats" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/unipro_stats &>> ${outputPath}/mods_log.txt
+    echo "UART Stats" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/soc:mod_uart/uart_stats &>> ${outputPath}/mods_log.txt
+    echo "APBE IDs as reported by APBE TSB" &>> ${outputPath}/mods_log.txt
+    cat /sys/devices/soc/0.apba_ctrl/apbe_ids &>> ${outputPath}/mods_log.txt
+}
+
+collectMtkLog() {
+    doLog d "Collecting MTK logs"
+
+    mtklogpath=/sdcard/mtklog
+    if [ -d $mtklogpath ]; then
+        for folder in $(ls $mtklogpath)
+        do
+        if [ -d ${mtklogpath}/${folder} ]; then
+            last_dir=$(ls -Art ${mtklogpath}/${folder} | tail -n 1)
+            if [ -n "$last_dir" ]; then
+                mkdir -p ${outputPath}/mtk/sdcard_mtklog
+                cp ${mtklogpath}/${folder}/${last_dir} -R ${outputPath}/mtk/sdcard_mtklog/mtklogs_${folder}_${last_dir}
+            fi
+        fi
+        done
+    fi
+
+    aee_exp_path=/data/aee_exp
+    if [ -d $aee_exp_path ]; then
+        doLog d "Collecting /data/aee_exp MTK logs"
+        mkdir -p ${outputPath}/mtk/data_aee_exp
+        cp $aee_exp_path -R ${outputPath}/mtk/data_aee_exp
+    fi
+
+    path=/data/vendor/mtklog
+    last_dir=$(ls -Art $path | tail -n 1)
+    if [ -n "$last_dir" ]; then
+        echo d "Collecting /data/vendor/mtklog MTK logs"
+        mkdir -p ${outputPath}/mtk/data_vendor_mtklog
+        cp $path/$last_dir -R ${outputPath}/mtk/data_vendor_mtklog
+    fi
+    exit 0
+}
+
+collectBluetoothLogs() {
+  doLog d "Collecting Bluetooth logs"
+  cp /data/misc/bluetooth/logs/ -R ${outputPath}/bluetooth_logs/
+}
+
+reportId=$1
+outputPath=$2
+
+collectAplogd
+
+if [ "$(getprop ro.bug2go.external_mode)" != "true" ]
+then
+    collectFPS
+    collectBatteryTracer
+    collectDontpanic
+    collectPowerSupplyLogger
+    collectSoCDebugLog
+    collectBp
+    collectEnergyMonitor
+    collectWlanDriverLog
+    collectModsLog
+    collectBluetoothLogs
+    collectMtkLog
+fi

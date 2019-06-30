@@ -1,0 +1,34 @@
+on early-fs
+    exec_start mmi-carrier-sh
+
+on early-boot
+    exec_start post-mmi-carrier-sh
+
+on post-fs-data
+    start data-mmi-carrier-sh
+
+on property:persist.omadm.operator.numeric=310000
+    exec_start post-mmi-sprint-sh
+
+on property:persist.carrier.carrierid=*
+    exec_start post-mmi-sprint-sh
+
+service mmi-carrier-sh /vendor/bin/init.mmi.carrier.sh -i
+    user root
+    oneshot
+    disabled
+
+service post-mmi-carrier-sh /vendor/bin/init.mmi.carrier.sh -o
+    user root
+    oneshot
+    disabled
+
+service post-mmi-sprint-sh /vendor/bin/init.mmi.carrier.sh -s
+    user root
+    oneshot
+    disabled
+
+service data-mmi-carrier-sh /vendor/bin/init.mmi.carrier.sh -d
+    user root
+    oneshot
+    disabled

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+     <package name="com.motorola.android.provisioning">
+          <permission name="android.permission.RECEIVE_WAP_PUSH"/>
+          <permission name="android.permission.RECEIVE_SMS"/>
+     </package>
+</permissions>

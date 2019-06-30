@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.lifetimedata">
+        <permission name="android.permission.MASTER_CLEAR"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="com.motorola.permission.ACCESS_HIDDENMENU_DATA"/>
+    </privapp-permissions>
+</permissions>

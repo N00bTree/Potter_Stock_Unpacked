@@ -1,0 +1,6 @@
+service wificond /system/bin/wificond
+    class main
+    user wifi
+    group wifi
+    capabilities NET_ADMIN NET_RAW
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.android.sprint.hiddenmenuapp">
+        <permission name="android.permission.SET_TIME_ZONE"/>
+        <permission name="android.permission.WRITE_GSERVICES"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.MASTER_CLEAR"/>
+        <permission name="android.permission.WRITE_APN_SETTINGS"/>
+        <permission name="android.permission.CALL_PRIVILEGED"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.LOCAL_MAC_ADDRESS"/>
+        <permission name="android.permission.REBOOT"/>
+    </privapp-permissions>
+</permissions>

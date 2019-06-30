@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.bach.modemstats">
+        <!-- System defined permissions -->
+        <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.MODIFY_NETWORK_ACCOUNTING"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.READ_LOGS"/>
+    </privapp-permissions>
+</permissions>

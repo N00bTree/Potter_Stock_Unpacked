@@ -1,0 +1,5 @@
+on boot
+    # Force rotation off during setup to
+    # work-around a GmsCore bug.
+    # MMI_TODO gms: Remove setup rotation lock once google fixes GmsCore
+    setprop ro.setupwizard.rotation_locked true

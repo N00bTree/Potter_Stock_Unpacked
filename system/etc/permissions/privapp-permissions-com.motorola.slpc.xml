@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="com.motorola.slpc">
+        <permission name="android.permission.REBOOT"/>
+        <permission name="com.motorola.sensorhub.permission.ACCESS_SENSOR_HUB"/>
+    </privapp-permissions>
+</permissions>

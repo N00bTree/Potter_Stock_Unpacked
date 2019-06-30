@@ -1,0 +1,8 @@
+# Migrate data to the new package from the old one
+
+com.motorola.ccc.ota:com.motorola.blur.service.blur
+    databases/cus.db
+
+com.motorola.ccc.ota:com.motorola.blur.service.blur
+    databases/cus.db-journal
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.motorola.moto">
+        <permission name="com.motorola.actions.provider.permission.READ_MODES"/>
+        <permission name="com.motorola.actions.provider.permission.WRITE_MODES"/>
+        <permission name="com.motorola.audiomonitor.provider.permission.READ_MODES"/>
+        <permission name="com.motorola.audiomonitor.provider.permission.WRITE_MODES"/>
+        <permission name="com.motorola.audiomonitor.permission.SETTINGS"/>
+        <permission name="android.permission.WRITE_SETTINGS"/>
+        <permission name="com.motorola.context.permission.CONTEXT"/>
+        <permission name="com.motorola.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="com.motorola.moto.permission.MOTO_STATE"/>
+        <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
+        <permission name="com.motorola.blur.service.blur.Permissions.INTERACT_BLUR_SERVICE"/>
+        <permission name="com.motorola.motodisplay.settings.LAUNCH_MOTODISPLAY"/>
+        <permission name="com.motorola.audiomonitor.permission.BROADCAST_RECEIVER"/>
+        <permission name="com.motorola.ccc.notification.READ_NOTIFICATIONS"/>
+        <permission name="com.motorola.ccc.notification.WRITE_NOTIFICATIONS"/>
+        <permission name="com.motorola.permission.ACCESS_CHECKIN"/>
+        <permission name="com.motorola.slpc.permission.BIND_SERVICE"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="com.motorola.slpc.permission.RECEIVER"/>
+        <permission name="com.motorola.context.permission.CONTEXT"/>
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+    </privapp-permissions>
+</permissions>
